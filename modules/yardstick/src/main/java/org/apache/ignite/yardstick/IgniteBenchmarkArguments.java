@@ -252,10 +252,10 @@ public class IgniteBenchmarkArguments {
     @Parameter(names = {"-stbs", "--streamerBufSize"}, description = "Data streamer buffer size")
     private int streamerBufSize = IgniteDataStreamer.DFLT_PER_NODE_BUFFER_SIZE;
 
-    @Parameter(names = {"stts", "--streamerThreads"}, description = "Data streamer threads num")
+    @Parameter(names = {"-stts", "--streamerThreads"}, description = "Data streamer threads num")
     private int streamerThreads = 32;
 
-    @Parameter(names = {"stpo", "--streamerParOps"}, description = "Data streamer parallel operations")
+    @Parameter(names = {"-stpo", "--streamerParOps"}, description = "Data streamer parallel operations")
     private int streamerParOps;
 
     /**
