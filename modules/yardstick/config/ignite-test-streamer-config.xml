@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+    Ignite Spring configuration file to startup grid.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    <import resource="ignite-base-config.xml"/>
+
+    <bean id="grid.cfg" class="org.apache.ignite.configuration.IgniteConfiguration" parent="base-ignite.cfg">
+        <property name="localHost" value="127.0.0.1"/>
+
+        <property name="discoverySpi">
+            <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder">
+                        <property name="addresses">
+                            <list>
+                                <value>127.0.0.1:47500</value>
+                                <value>127.0.0.1:47501</value>
+                                <value>127.0.0.1:47502</value>
+                                <value>127.0.0.1:47503</value>
+                                <value>127.0.0.1:47504</value>
+                                <value>127.0.0.1:47505</value>
+                                <value>127.0.0.1:47506</value>
+                                <value>127.0.0.1:47507</value>
+                                <value>127.0.0.1:47508</value>
+                                <value>127.0.0.1:47509</value>
+                            </list>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+        <property name="communicationSpi">
+            <bean class="org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi">
+                <property name="sharedMemoryPort" value="-1"/>
+            </bean>
+        </property>
+
+        <property name="memoryConfiguration">
+            <bean class="org.apache.ignite.configuration.MemoryConfiguration">
+                <property name="defaultMemoryPolicyName" value="Default_10GB_NoEviction"/>
+
+                <property name="memoryPolicies">
+                    <list>
+                        <bean class="org.apache.ignite.configuration.MemoryPolicyConfiguration">
+                            <property name="name" value="Default_10GB_NoEviction"/>
+                            <property name="initialSize" value="#{10L * 1024 * 1024 * 1024}"/>
+                            <property name="maxSize" value="#{10L * 1024 * 1024 * 1024}"/>
+                            <property name="metricsEnabled" value="true"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </property>
+
+        <property name="cacheConfiguration">
+            <list>
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="nds8"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="copyOnRead" value="true"/>
+                    <property name="sqlSchema" value="PUBLIC"/>
+                    <property name="queryParallelism" value="2"/>
+
+                    <property name="statisticsEnabled" value="true"/>
+                    <property name="managementEnabled" value="true"/>
+
+                    <property name="queryEntities">
+                        <list>
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <property name="keyType" value="org.apache.ignite.yardstick.cache.model.Nds8Key"/>
+                                <property name="valueType" value="org.apache.ignite.yardstick.cache.model.Nds8"/>
+                                <property name="tableName" value="nds8"/>
+                                <property name="keyFieldName" value="nds8Key"/>
+
+                                <property name="fields">
+                                    <map>
+                                        <entry key="REQUEST_ID" value="java.lang.Long"/>
+                                        <entry key="DECLARATION_VERSION_ID" value="java.lang.Long"/>
+                                        <entry key="CHAPTER" value="java.lang.Integer"/>
+                                        <entry key="ORDINAL_NUMBER" value="java.lang.Long"/>
+                                        <entry key="OKV_CODE" value="java.lang.String"/>
+                                        <entry key="CREATE_DATE" value="java.sql.Date"/>
+                                        <entry key="RECEIVE_DATE" value="java.sql.Date"/>
+                                        <entry key="OPERATION_CODE" value="java.lang.String"/>
+                                        <entry key="INVOICE_NUM" value="java.lang.String"/>
+                                        <entry key="INVOICE_DATE" value="java.sql.Date"/>
+                                        <entry key="CHANGE_NUM" value="java.lang.Short"/>
+                                        <entry key="CHANGE_DATE" value="java.sql.Date"/>
+                                        <entry key="CORRECTION_NUM" value="java.lang.String"/>
+                                        <entry key="CORRECTION_DATE" value="java.sql.Date"/>
+                                        <entry key="CHANGE_CORRECTION_NUM" value="java.lang.Short"/>
+                                        <entry key="CHANGE_CORRECTION_DATE" value="java.sql.Date"/>
+                                        <entry key="RECEIPT_DOC_NUM" value="java.lang.String"/>
+                                        <entry key="RECEIPT_DOC_DATE" value="java.lang.String"/>
+                                        <entry key="BUY_ACCEPT_DATE" value="java.lang.String"/>
+                                        <entry key="BUYER_INN" value="java.lang.String"/>
+                                        <entry key="BUYER_KPP" value="java.lang.String"/>
+                                        <entry key="SELLER_INN" value="java.lang.String"/>
+                                        <entry key="SELLER_KPP" value="java.lang.String"/>
+                                        <entry key="SELLER_INVOICE_NUM" value="java.lang.String"/>
+                                        <entry key="SELLER_INVOICE_DATE" value="java.sql.Date"/>
+                                        <entry key="BROKER_INN" value="java.lang.String"/>
+                                        <entry key="BROKER_KPP" value="java.lang.String"/>
+                                        <entry key="DEAL_KIND_CODE" value="java.lang.Integer"/>
+                                        <entry key="CUSTOMS_DECLARATION_NUM" value="java.lang.String"/>
+                                        <entry key="PRICE_BUY_AMOUNT" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_BUY_NDS_AMOUNT" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_SELL" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_SELL_IN_CURR" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_SELL_18" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_SELL_10" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_SELL_0" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_NDS_18" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_NDS_10" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_TAX_FREE" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_TOTAL" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_NDS_TOTAL" value="java.math.BigDecimal"/>
+                                        <entry key="DIFF_CORRECT_DECREASE" value="java.math.BigDecimal"/>
+                                        <entry key="DIFF_CORRECT_INCREASE" value="java.math.BigDecimal"/>
+                                        <entry key="DIFF_CORRECT_NDS_DECREASE" value="java.math.BigDecimal"/>
+                                        <entry key="DIFF_CORRECT_NDS_INCREASE" value="java.math.BigDecimal"/>
+                                        <entry key="PRICE_NDS_BUYER" value="java.math.BigDecimal"/>
+                                        <entry key="ROW_KEY" value="java.lang.String"/>
+                                        <entry key="ACTUAL_ROW_KEY" value="java.lang.String"/>
+                                        <entry key="COMPARE_ROW_KEY" value="java.lang.String"/>
+                                        <entry key="COMPARE_ALGO_ID" value="java.lang.Integer"/>
+                                        <entry key="FORMAT_ERRORS" value="java.lang.String"/>
+                                        <entry key="LOGICAL_ERRORS" value="java.lang.String"/>
+                                        <entry key="SELLER_AGENCY_INFO_INN" value="java.lang.String"/>
+                                        <entry key="SELLER_AGENCY_INFO_KPP" value="java.lang.String"/>
+                                        <entry key="SELLER_AGENCY_INFO_NAME" value="java.lang.String"/>
+                                        <entry key="SELLER_AGENCY_INFO_NUM" value="java.lang.String"/>
+                                        <entry key="SELLER_AGENCY_INFO_DATE" value="java.sql.Date"/>
+                                        <entry key="IS_DOP_LIST" value="java.lang.Integer"/>
+                                        <entry key="IS_IMPORT" value="java.lang.Integer"/>
+                                        <entry key="CLARIFICATION_KEY" value="java.lang.String"/>
+                                        <entry key="CONTRAGENT_KEY" value="java.lang.Long"/>
+                                        <entry key="IS_CLARIFIED" value="java.lang.Integer"/>
+                                        <entry key="nds8Key" value="com.luxoft.gnivc.nds2.ignite.model.Nds8Key"/>
+                                    </map>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+
+    </bean>
+</beans>

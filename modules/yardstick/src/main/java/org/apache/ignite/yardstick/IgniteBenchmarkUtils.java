@@ -26,16 +26,20 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import javax.cache.CacheException;
+import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteTransactions;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cluster.ClusterTopologyException;
 import org.apache.ignite.configuration.IgniteConfiguration;
+import org.apache.ignite.internal.binary.BinaryObjectImpl;
 import org.apache.ignite.transactions.Transaction;
 import org.apache.ignite.transactions.TransactionConcurrency;
 import org.apache.ignite.transactions.TransactionIsolation;
 import org.apache.ignite.transactions.TransactionOptimisticException;
 import org.apache.ignite.transactions.TransactionRollbackException;
 import org.apache.ignite.yardstick.cache.IgnitePutBenchmark;
+import org.apache.ignite.yardstick.cache.IgniteTestStreamerBenchmark;
+import org.apache.ignite.yardstick.cache.model.Nds8;
 import org.yardstickframework.BenchmarkConfiguration;
 import org.yardstickframework.BenchmarkDriver;
 import org.yardstickframework.BenchmarkDriverStartUp;
@@ -108,9 +112,9 @@ public class IgniteBenchmarkUtils {
      * @throws Exception If failed.
      */
     public static void main(String[] args) throws Exception {
-        final String cfg = "modules/yardstick/config/ignite-localhost-config.xml";
+        final String cfg = "modules/yardstick/config/ignite-test-streamer-config.xml";
 
-        final Class<? extends BenchmarkDriver> benchmark = IgnitePutBenchmark.class;
+        final Class<? extends BenchmarkDriver> benchmark = IgniteTestStreamerBenchmark.class;
 
         final int threads = 1;
 
@@ -121,7 +125,7 @@ public class IgniteBenchmarkUtils {
         final int warmUp = 60;
         final int duration = 120;
 
-        final int range = 100_000;
+        final int range = 1_000_000;
 
         final boolean throughputLatencyProbe = false;
 
@@ -137,6 +141,7 @@ public class IgniteBenchmarkUtils {
         ArrayList<String> args0 = new ArrayList<>();
 
         addArg(args0, "-t", threads);
+//        addArg(args0, "-stts", threads);
         addArg(args0, "-w", warmUp);
         addArg(args0, "-d", duration);
         addArg(args0, "-r", range);

@@ -252,6 +252,9 @@ public class IgniteBenchmarkArguments {
     @Parameter(names = {"-stbs", "--streamerBufSize"}, description = "Data streamer buffer size")
     private int streamerBufSize = IgniteDataStreamer.DFLT_PER_NODE_BUFFER_SIZE;
 
+    @Parameter(names = {"stts", "--streamerThreads"}, description = "Data streamer threads num")
+    private int streamerThreads = 32;
+
     /**
      * @return {@code True} if need set {@link PersistentStoreConfiguration}.
      */
@@ -374,7 +377,7 @@ public class IgniteBenchmarkArguments {
     /**
      * @return {@code True} if flag for native benchmarking is set.
      */
-    public boolean isNative(){
+    public boolean isNative() {
         return ntv;
     }
 
@@ -629,6 +632,13 @@ public class IgniteBenchmarkArguments {
      */
     public int streamerBufferSize() {
         return streamerBufSize;
+    }
+
+    /**
+     * @return Streamer threads.
+     */
+    public int streamerThreads() {
+        return streamerThreads;
     }
 
     /** {@inheritDoc} */
