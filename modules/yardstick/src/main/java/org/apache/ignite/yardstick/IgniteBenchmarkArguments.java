@@ -255,6 +255,9 @@ public class IgniteBenchmarkArguments {
     @Parameter(names = {"stts", "--streamerThreads"}, description = "Data streamer threads num")
     private int streamerThreads = 32;
 
+    @Parameter(names = {"stpo", "--streamerParOps"}, description = "Data streamer parallel operations")
+    private int streamerParOps;
+
     /**
      * @return {@code True} if need set {@link PersistentStoreConfiguration}.
      */
@@ -639,6 +642,13 @@ public class IgniteBenchmarkArguments {
      */
     public int streamerThreads() {
         return streamerThreads;
+    }
+
+    /**
+     * @return Streamer par ops.
+     */
+    public int streamerParOps() {
+        return streamerParOps;
     }
 
     /** {@inheritDoc} */
