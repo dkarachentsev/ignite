@@ -32,6 +32,9 @@ public class IgniteTestStreamerBenchmark extends IgniteAbstractBenchmark {
     @Override public void setUp(BenchmarkConfiguration cfg) throws Exception {
         super.setUp(cfg);
 
+        if (!ignite().active())
+            ignite().active();
+
         entries = args.range();
 
         if (entries <= 0)
