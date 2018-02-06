@@ -35,6 +35,8 @@ public class IgniteTestStreamerBenchmark extends IgniteAbstractBenchmark {
         if (!ignite().active())
             ignite().active(true);
 
+        ignite().cache(CACHE_NAME).removeAll();
+
         entries = args.range();
 
         if (entries <= 0)
