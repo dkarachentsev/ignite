@@ -33,7 +33,7 @@ public class IgniteTestStreamerBenchmark extends IgniteAbstractBenchmark {
         super.setUp(cfg);
 
         if (!ignite().active())
-            ignite().active();
+            ignite().active(true);
 
         entries = args.range();
 
