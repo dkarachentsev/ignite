@@ -29,6 +29,16 @@
     <bean id="grid.cfg" class="org.apache.ignite.configuration.IgniteConfiguration" parent="base-ignite.cfg">
         <property name="localHost" value="127.0.0.1"/>
 
+        <property name="persistentStoreConfiguration">
+            <bean class="org.apache.ignite.configuration.PersistentStoreConfiguration">
+                <property name="walMode" value="BACKGROUND"/>
+                <property name="persistentStorePath" value="/storage/ssd/dkarachentsev/ignitepersistence"/>
+                <property name="walHistorySize" value="3"/>
+                <property name="checkpointingFrequency" value="100000"/>
+                <property name="metricsEnabled" value="true"/>
+            </bean>
+        </property>
+
         <property name="discoverySpi">
             <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
                 <property name="ipFinder">
